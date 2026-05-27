@@ -44,12 +44,13 @@ export default function FamilyWallet() {
       l.href = "https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap";
       document.head.appendChild(l);
     }
-    try {
-      fetch("/api/data")
+    fetch("/api/data")
       .then(r => r.json())
-      .then(({ data }) => { if (Object.keys(data).length) setAllData(data); })
+      .then(({ data }) => { if (data && Object.keys(data).length) setAllData(data); })
       .catch(() => {});
-      const s = localStorage.getItem("fw-settings-v2"); if (s) { const p=JSON.parse(s); if(p.dark!==undefined)setDark(p.dark); if(p.goal)setGoal(p.goal); }
+    try {
+      const s = localStorage.getItem("fw-settings-v2");
+      if (s) { const p=JSON.parse(s); if(p.dark!==undefined)setDark(p.dark); if(p.goal)setGoal(p.goal); }
     } catch(e) {}
   }, []);
 

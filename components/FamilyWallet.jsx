@@ -107,18 +107,19 @@ export default function FamilyWallet() {
     URL.revokeObjectURL(url);
   };
 
+
   // ── AI Insight
   const genInsight = async () => {
     setAiLoading(true); setAiText("");
     try {
-      const r = await fetch("https://api.anthropic.com/v1/messages",{
+      const r = await fetch("/api/ai", { 
         method:"POST", headers:{"Content-Type":"application/json"},
         body:JSON.stringify({
           model:"claude-sonnet-4-20250514", max_tokens:800,
-          system:`Είσαι ο οικογενειακός λογιστής του Θανάση και της Έμμυς — ζευγάρι συνταξιούχων στην Ελλάδα. Σταθερά έσοδα: συντάξεις ΙΚΑ/ΕΦΚΑ + ενοίκιο από ακίνητο στο Μαρούσι. Δύο κατοικίες: κύρια + εξοχικό στην Καλλιρρόη Ευρυτανίας (εξ ου δύο λογαριασμοί ΔΕΗ). Στόχος αποταμίευσης: ${fmt(goal)}/μήνα. Φιλοσοφία: ποτέ κριτική, μόνο παρατήρηση. Ελληνικά, ζεστά, απλά, χωρίς bullet points — 4 παράγραφοι: σύνοψη | τι πήγε καλά | κάτι να προσέξουν | θετική νότα.`,
+          system:`Είσαι ο οικογενειακός λογιστής του Θανάση και της Έμμυς — ζευγάρι συνταξιούχων στην Ελλάδα. Σταθερά έσοδα: συντάξεις ΙΚΑ/ΕΦΚΑ + ενοίκιο από ακίνητο στο Μαρούσι. Δύο κατοικίες: κύρια + εξοχικό στην Καλλιρρόη Ασπροποτάμου (εξ ου δύο λογαριασμοί ΔΕΗ). Στόχος αποταμίευσης: ${fmt(goal)}/μήνα. Φιλοσοφία: ποτέ κριτική, μόνο παρατήρηση. Ελληνικά, ζεστά, απλά, χωρίς bullet points — 4 παράγραφοι: σύνοψη | τι πήγε καλά | κάτι να προσέξουν | θετική νότα.`,
           messages:[{role:"user",content:`Μήνας: ${mLabel(month)}\nΈσοδα: ${fmt(T.income)}\nΠάγια: ${fmt(T.fixed)}\nΜεταβλητά: ${fmt(T.variable)}\nΈκτακτα: ${fmt(T.occasional)}\nΥπόλοιπο: ${fmt(T.balance)}\nΣτόχος αποταμίευσης: ${fmt(goal)}\n\nΑναλυτικά:\n${JSON.stringify(md,null,2)}`}]
         })
-      });
+       });
       const j = await r.json(); setAiText(j.content[0].text);
     } catch { setAiText("Σφάλμα σύνδεσης. Δοκιμάστε ξανά."); }
     setAiLoading(false);

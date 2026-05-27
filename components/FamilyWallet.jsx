@@ -129,11 +129,7 @@ export default function FamilyWallet() {
         })
        });
       const j = await r.json(); 
-      const text = j?.content?.[0]?.text 
-          || j?.completion 
-          || j?.error?.message 
-          || JSON.stringify(j);
-setAiText(text);
+      setAiText(j.content[0].text);
     } catch { setAiText("Σφάλμα σύνδεσης. Δοκιμάστε ξανά."); }
     setAiLoading(false);
   };

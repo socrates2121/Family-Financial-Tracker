@@ -1,5 +1,5 @@
 {
-  "name": "family-wallet-app",
+  "name": "family-wallet",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,9 +8,10 @@
     "start": "next start"
   },
   "dependencies": {
-    "next": "14.2.3",
-    "react": "^18",
-    "react-dom": "^18",
-    "recharts": "^2.12.7"
+    "@upstash/redis": "^1.34.0",
+    "next": "15.3.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^3.0.0"
   }
 }

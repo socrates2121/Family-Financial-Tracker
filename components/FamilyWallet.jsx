@@ -45,7 +45,10 @@ export default function FamilyWallet() {
       document.head.appendChild(l);
     }
     try {
-      const d = localStorage.getItem("fw-data-v2");    if (d) setAllData(JSON.parse(d));
+      fetch("/api/data")
+      .then(r => r.json())
+      .then(({ data }) => { if (Object.keys(data).length) setAllData(data); })
+      .catch(() => {});
       const s = localStorage.getItem("fw-settings-v2"); if (s) { const p=JSON.parse(s); if(p.dark!==undefined)setDark(p.dark); if(p.goal)setGoal(p.goal); }
     } catch(e) {}
   }, []);
@@ -57,7 +60,11 @@ export default function FamilyWallet() {
 
   const persist = (d) => {
     setAllData(d);
-    try { localStorage.setItem("fw-data-v2", JSON.stringify(d)); } catch(e) {}
+    fetch("/api/data", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: d }),
+    }).catch(() => {});
   };
 
   // ── Current month data & totals

@@ -128,7 +128,11 @@ export default function FamilyWallet() {
           messages:[{role:"user",content:`Μήνας: ${mLabel(month)}\nΈσοδα: ${fmt(T.income)}\nΠάγια: ${fmt(T.fixed)}\nΜεταβλητά: ${fmt(T.variable)}\nΈκτακτα: ${fmt(T.occasional)}\nΥπόλοιπο: ${fmt(T.balance)}\nΣτόχος αποταμίευσης: ${fmt(goal)}\n\nΑναλυτικά:\n${JSON.stringify(md,null,2)}`}]
         })
        });
-      const j = await r.json(); const text = j.content?.[0]?.text || j.error?.message || "Δεν ήρθε απάντηση.";
+      const j = await r.json(); 
+      const text = j?.content?.[0]?.text 
+          || j?.completion 
+          || j?.error?.message 
+          || JSON.stringify(j);
 setAiText(text);
     } catch { setAiText("Σφάλμα σύνδεσης. Δοκιμάστε ξανά."); }
     setAiLoading(false);

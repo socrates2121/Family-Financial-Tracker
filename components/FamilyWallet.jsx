@@ -33,6 +33,8 @@ export default function FamilyWallet() {
   const [aiText,setAiText]         = useState("");
   const [aiLoading,setAiLoading]   = useState(false);
   const [delConfirm,setDelConfirm] = useState(null);
+  const [showNote, setShowNote] = useState(true);
+  
 
   const C = dark ? DARK : LIGHT;
 
@@ -403,6 +405,26 @@ export default function FamilyWallet() {
           <button style={S.mBtn} onClick={()=>setMonth(s=>shift(s,+1))}>›</button>
         </div>
       </div>
+
+      {showNote && (
+        <div style={{
+          background:"#fef9c3", border:"1px solid #f0d040",
+          borderRadius:12, margin:"12px 16px 0",
+          padding:"12px 16px", display:"flex",
+          alignItems:"flex-start", gap:10
+        }}>
+          <span style={{fontSize:18}}>📌</span>
+          <div style={{flex:1, fontSize:14, color:"#7a6000", lineHeight:1.6}}>
+            Πρόσεξε να τα προσθέσεις στο σωστό μήνα για να γίνει σωστά ο ισολογισμός!
+          </div>
+          <button
+            onClick={() => setShowNote(false)}
+            style={{background:"none", border:"none", cursor:"pointer",
+                    color:"#7a6000", fontSize:18, padding:"0 4px", lineHeight:1}}
+          >✕</button>
+        </div>
+      )}
+      
       <div style={{paddingTop:8,paddingBottom:24}}>
         {tab==="dashboard"&&renderDashboard()}
         {tab==="history"  &&renderHistory()}
